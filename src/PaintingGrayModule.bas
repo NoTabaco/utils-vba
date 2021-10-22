@@ -6,7 +6,7 @@ Attribute PaintingGray.VB_ProcData.VB_Invoke_Func = "g\n14"
 '
 ' Shortcut Key: Ctrl+g
 '
-    Dim CurrentCell As Integer
+    Dim CurrentRow As Integer
     Dim CurrentColumn As Integer
     
     Dim DestinationCell As Integer
