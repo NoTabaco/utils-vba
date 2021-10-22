@@ -2,9 +2,9 @@ Attribute VB_Name = "PaintingGrayModule"
 Sub PaintingGray()
 Attribute PaintingGray.VB_ProcData.VB_Invoke_Func = "g\n14"
 '
-' PaintingGray 매크로
+' PaintingGray Macro
 '
-' 바로 가기 키: Ctrl+g
+' Shortcut Key: Ctrl+g
 '
     Dim CurrentCell As Integer
     Dim CurrentColumn As Integer
