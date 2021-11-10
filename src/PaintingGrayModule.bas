@@ -15,5 +15,4 @@ Attribute PaintingGray.VB_ProcData.VB_Invoke_Func = "g\n14"
     CurrentColumn = ActiveCell.Column
     DestinationCell = ActiveCell.Column + 2
     Range(Cells(CurrentRow, CurrentColumn), Cells(CurrentRow, DestinationCell)).Interior.Color = 10921638
-
 End Sub

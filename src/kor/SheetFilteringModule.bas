@@ -1,10 +1,15 @@
 Attribute VB_Name = "SheetFilteringModule"
+Private DeleteCount As Integer
 Public Sub SheetFiltering(dbName As String)
     Dim dbLastRow As Integer
 
     dbLastRow = GetDBLastRow(dbName)
+    DeleteCount = 0
     DeleteItems dbName, dbLastRow
-    
+    If DeleteCount = 0 Then
+        MsgBox "Data doesn't exist in " & dbName
+        Exit Sub
+    End If
     Trim dbName, dbLastRow
 End Sub
 
@@ -23,26 +28,27 @@ Sub DeleteItems(dbName As String, dbLastRow As Integer)
     For Each Ticker In Sheets(dbName).Range("C4:C" & dbLastRow)
             If (Ticker.Interior.Color = 10921638) Then
                 Ticker.EntireRow.Clear
+                DeleteCount = DeleteCount + 1
             End If
     Next Ticker
 End Sub
 
 Sub Trim(db As String, TestDBLastRow As Integer)
-    Dim index As Integer
-    Dim count As Integer
+    Dim Index As Integer
+    Dim Count As Integer
 
     Sheets(db).Select
-    index = 4
-    count = 0
-    Do While index <= TestDBLastRow
-        If (IsEmpty(Cells(index, 1))) Then
-            Cells(index, 1).EntireRow.Delete
-            index = 4
-            count = count + 1
-                If (count > 30) Then
+    Index = 4
+    Count = 0
+    Do While Index <= TestDBLastRow
+        If (IsEmpty(Cells(Index, 1))) Then
+            Cells(Index, 1).EntireRow.Delete
+            Index = 4
+            Count = Count + 1
+                If (Count > 30) Then
                     Exit Do
                 End If
-        Else: index = index + 1
+        Else: Index = Index + 1
         End If
     Loop
 End Sub

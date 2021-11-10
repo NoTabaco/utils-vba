@@ -1,4 +1,6 @@
 Attribute VB_Name = "FilteringModule"
+Private DeleteCount As Integer
+
 Public Sub Filtering()
     Dim RealDBLastRow As Integer
     Dim FilterArrayLength As Integer
@@ -12,10 +14,18 @@ Public Sub Filtering()
     RealDBLastRow = GetDBLastRow(realDB)
     filterArray = AddItems(RealDBLastRow).ToArray
     FilterArrayLength = UBound(filterArray) - LBound(filterArray) + 1
+    If FilterArrayLength = 0 Then
+        MsgBox "Data doesn't exist in " & realDB
+        Exit Sub
+    End If
   
     TestDBLastRow = GetDBLastRow(testDB)
+    DeleteCount = 0
     DeleteItems filterArray, FilterArrayLength, TestDBLastRow
-
+    If DeleteCount = 0 Then
+        MsgBox "Data doesn't exist in " & testDB
+        Exit Sub
+    End If
     Trim testDB, TestDBLastRow
 End Sub
 
@@ -45,27 +55,28 @@ Sub DeleteItems(ByRef filterArray As Variant, FilterArrayLength As Integer, Test
         For i = 0 To FilterArrayLength - 1
             If (Ticker = filterArray(i)) Then
                 Ticker.EntireRow.Clear
+                DeleteCount = DeleteCount + 1
             End If
         Next i
     Next Ticker
 End Sub
 
 Sub Trim(db As String, TestDBLastRow As Integer)
-    Dim index As Integer
-    Dim count As Integer
+    Dim Index As Integer
+    Dim Count As Integer
 
     Sheets(db).Select
-    index = 4
-    count = 0
-    Do While index <= TestDBLastRow
-        If (IsEmpty(Cells(index, 1))) Then
-            Cells(index, 1).EntireRow.Delete
-            index = 4
-            count = count + 1
-                If (count > 10) Then
+    Index = 4
+    Count = 0
+    Do While Index <= TestDBLastRow
+        If (IsEmpty(Cells(Index, 1))) Then
+            Cells(Index, 1).EntireRow.Delete
+            Index = 4
+            Count = Count + 1
+                If (Count > 10) Then
                     Exit Do
                 End If
-        Else: index = index + 1
+        Else: Index = Index + 1
         End If
     Loop
 End Sub
