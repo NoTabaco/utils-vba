@@ -15,17 +15,22 @@ Public Sub DateFiltering()
     NewestCount = 0
     DeleteCount = 0
     StartNameCellRow = 10
+    
+    JapanDBLastRow = GetDBLastRow(japanDB)
+    If (Cells(JapanDBLastRow, 1).Value = CurrentDate) Then
+        MsgBox "Don't use the date after the company data"
+        Exit Sub
+    End If
     ' A1 OK, A2 ~ OK, New Date OK
     If (Cells(1, 1).Value = CurrentDate Or Range("A1").End(xlDown).Value = CurrentDate) Then
-        JapanDBLastRow = GetDBLastRow(japanDB)
         CurrentDateRow = FindDateRow(JapanDBLastRow, CurrentDate, NewestCount)
         InsertDateDBLastRow = DateDBLastRow(CurrentDateRow, NewestCount)
         InitIndex = FindInitIndex(JapanDBLastRow)
         FilteringData InitIndex, JapanDBLastRow, InsertDateDBLastRow
         If DeleteCount = 0 Then
-        MsgBox "Data doesn't exist in " & japanDB
-        Exit Sub
-    End If
+            MsgBox "Data doesn't exist in " & japanDB
+            Exit Sub
+        End If
         Designing Val(CurrentDateRow), InsertDateDBLastRow
     Else
         MsgBox "Can't find Date"

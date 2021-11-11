@@ -8,7 +8,7 @@ Sub Moving()
     
     Dim CurrentDate As String
     CurrentDate = Format(Date, "yyyy-mm-dd")
-    
+
     If (Range("A1").End(xlDown).Value = CurrentDate) Then
         MsgBox "Please use it only if there is no date data"
         Exit Sub
@@ -20,6 +20,10 @@ Sub Moving()
     End If
     
     JapanDBLastRow = GetDBLastRow(japanDB)
+    If (Cells(JapanDBLastRow, 1).Value = CurrentDate) Then
+        MsgBox "Please use it only if there is no date data"
+        Exit Sub
+    End If
     JapanDBFirstRow = Range("A1").End(xlDown).Row
     Move JapanDBFirstRow, JapanDBLastRow
 End Sub
