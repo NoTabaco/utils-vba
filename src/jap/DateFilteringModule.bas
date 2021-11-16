@@ -14,7 +14,7 @@ Public Sub DateFiltering()
     CurrentDate = Format(Date, "yyyy-mm-dd")
     NewestCount = 0
     DeleteCount = 0
-    StartNameCellRow = 10
+    StartNameCellRow = Cells.Find(What:="Name").Row
     
     JapanDBLastRow = GetDBLastRow(japanDB)
     If (Cells(JapanDBLastRow, 1).Value = CurrentDate) Then
